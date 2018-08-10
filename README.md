@@ -11,6 +11,7 @@
 
 <br>
 ## Core Functions
+
 ```
 - (NSString *)makeImplementationParser
 {
