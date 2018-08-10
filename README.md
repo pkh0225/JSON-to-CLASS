@@ -1,5 +1,6 @@
 ![blogimg](https://github.com/pkh0225/JTC-JSON-TO-CLASS/blob/master/jtc.png)
 
+### 🚧 작업중인 레포입니다. 
 # 🚀 JTC
 ## JSON TO CLASS
 > JSON to Class Helper written in Objective-C for iOS developers.
