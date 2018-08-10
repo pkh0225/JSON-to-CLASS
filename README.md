@@ -12,25 +12,64 @@
 <br><br>
 ## Sample Code
 ```
-#import <Foundation/Foundation.h>
-#import "PropertyModelData.h"
-
-@interface ClassModelData : NSObject
-
-@property (nonatomic, strong) NSString* name;
-@property (nonatomic, strong) NSString* parentName;
-@property (nonatomic, strong) NSString* perfix;
-@property (nonatomic, strong) NSMutableArray<PropertyModelData*> *propertyList;
-
-
-
-+ (ClassModelData*)allocWithDictionary:(NSDictionary*)dic className:(NSString*)className parentName:(NSString*)parentName perfix:(NSString*)perfix;
-- (id)initWithDictionary:(NSDictionary *)dic className:(NSString*)className parentName:(NSString*)parentName perfix:(NSString*)perfix;
-- (void)setSerialize:(NSDictionary *)dic;
-
-- (NSString *)getStringObjectCHeader;
-- (NSString *)getStringObjectCImplementation;
-
-- (NSString*)getStringSwift;
-@end
+- (NSString *)makeImplementationParser
+{
+    
+    NSMutableString *str = [[NSMutableString alloc] init];
+    
+    for (PropertyModelData *propertyModelData in self.propertyList)
+    {
+        NSString *key = propertyModelData.key;
+        NSObject *value = propertyModelData.value;
+        NSString *subClassName = [NSString stringWithFormat:@"%@%@",self.perfix, [key upercaseFirstChar]];
+        NSString *arraySubClassName = [NSString stringWithFormat:@"%@%@%@",self.perfix, [key upercaseFirstChar], ARRAY_INNER_CLASS_TAIL_PIX];
+        //        NSLog(@"key = %@, value = %@, value class = %@", key, value, [value className]);
+        
+        if ([value isKindOfClass:[NSString class]])
+        {
+            [str appendFormat:@"\n    self.%@ = [dic objectForKey:@\"%@\"];", key, key];
+        }
+        else if ([value isKindOfClass:[NSNumber class]])
+        {
+            [str appendFormat:@"\n    %@", [self makeMClassParserNumberType:CFNumberGetType((CFNumberRef)value) key:key]];
+        }
+        else if ([value isKindOfClass:[NSArray class]])
+        {
+            NSArray *array = (NSArray *)value;
+            
+            if ([array count] > 0)
+            {
+                NSObject *obj = [array objectAtIndex:0];
+                if ([obj isKindOfClass:[NSDictionary class]])
+                {
+                    [str appendFormat:@"\n    if ([[dic objectForKey:@\"%@\"] isKindOfClass:[NSArray class]]) {", key];
+                    [str appendFormat:@"\n        self.%@ = [[NSMutableArray<%@*> alloc] init];", key, arraySubClassName];
+                    [str appendFormat:@"\n        for (NSDictionary *arrayItem  in [dic objectForKey:@\"%@\"])"
+                                      @"\n        {"
+                                      @"\n            %@ *obj =  [%@ allocWithDictionary:arrayItem];"
+                                      @"\n            if (obj != nil)"
+                                      @"\n                [self.%@ addObject:obj];"
+                                      @"\n        }",
+                     key, arraySubClassName, arraySubClassName, key];
+                    [str appendFormat:@"\n    }"];
+                }
+                else
+                {
+                    [str appendFormat:@"\n    self.%@ = [dic objectForKey:@\"%@\"];", key, key];
+                }
+                
+            }
+        }
+        else if ([value isKindOfClass:[NSDictionary class]])
+        {
+            [str appendFormat:@"\n    self.%@ = [%@ allocWithDictionary:[dic objectForKey:@\"%@\"]];", key, subClassName, key];
+        }
+        else
+        {
+            [str appendFormat:@"\n    self.%@ =  %@; //type error %@", key, NSStringFromClass([value class]), NSStringFromClass([value class])];
+        }
+    }
+    
+    return str;
+}
 ```
