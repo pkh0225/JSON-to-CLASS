@@ -244,12 +244,10 @@
     NSMutableString *str = [[NSMutableString alloc] init];
     
     [str appendString:@"\n"
-                      @"\n    init() {"
                       @"\n"
-                      @"\n    }"
-                      @"\n"
-                      @"\n    init(_ dic: Dictionary<String, Any>) {"
-                      @"\n         self.setSerialize(dic)"
+                      @"\n    init(_ dic: [String: Any]?) {"
+                      @"\n        guard let dic = dic else { return }"
+                      @"\n        self.setSerialize(dic)"
                       @"\n    }"];
     
     return str;
@@ -290,8 +288,8 @@
     NSMutableString *str = [[NSMutableString alloc] init];
     
     [str appendFormat:
-     @"\n\n    func setSerialize(_ dic: Dictionary<String, Any>) {"
-     @"\n        guard dic.count > 0 else { return }"
+     @"\n\n    func setSerialize(_ dic: [String: Any]?) {"
+     @"\n        guard let dic = dic, dic.count > 0 else { return }"
      @"\n"
      @"%@"
      @"\n    }",
@@ -392,9 +390,9 @@
                 
                 if ([obj isKindOfClass:[NSDictionary class]])
                 {
-                    [str appendFormat:@"\n        if let data = dic[\"%@\"] as? Array<Any> {", key];
-                    [str appendFormat:@"\n            for case let arrayItem as Dictionary<String, Any> in data {"
-                                      @"\n                let obj : %@ = %@(arrayItem)"
+                    [str appendFormat:@"\n        if let data = dic[\"%@\"] as? [Any] {", key];
+                    [str appendFormat:@"\n            for case let subItem as [String: Any] in data {"
+                                      @"\n                let obj : %@ = %@(subItem)"
                                       @"\n                self.%@.append(obj)"
                                       @"\n            }",
                      arraySubClassName, arraySubClassName, key];
@@ -402,11 +400,11 @@
                 }
                 else if ([obj isKindOfClass:[NSString class]])
                 {
-                    [str appendFormat:@"\n        if let data = dic[\"%@\"] as? Array<String> { self.%@ = data }", key, key];
+                    [str appendFormat:@"\n        if let data = dic[\"%@\"] as? [String] { self.%@ = data }", key, key];
                 }
                 else
                 {
-                    [str appendFormat:@"\n        if let data = dic[\"%@\"] as? Array<Any> { self.%@ = data }", key, key];
+                    [str appendFormat:@"\n        if let data = dic[\"%@\"] as? [Any] { self.%@ = data }", key, key];
                 }
                 
                 
@@ -415,7 +413,7 @@
         }
         else if ([value isKindOfClass:[NSDictionary class]])
         {
-            [str appendFormat:@"\n        if let data = dic[\"%@\"] as? Dictionary<String, Any> { self.%@ = %@(data) }", key, key, subClassName];
+            [str appendFormat:@"\n        if let data = dic[\"%@\"] as? [String: Any] { self.%@ = %@(data) }", key, key, subClassName];
         }
         else
         {
@@ -577,7 +575,7 @@
     [str appendFormat:@"\n\n    public var description: String {"
                       @"\n        get {"
                       @"\n            var str: String = \"\""
-                      @"\n\n             str += \"\\n==== <\\(String(describing: type(of: self)) )> ====\" ", self.name];
+                      @"\n\n             str += \"\\n==== ** \\(String(describing: type(of: self)) ) ** ====\" ", self.name];
     
     for (PropertyModelData *propertyModelData in self.propertyList)
     {
@@ -593,7 +591,7 @@
         }
         else if ([value isKindOfClass:[NSArray class]])
         {
-            [str appendFormat:@"\n             str += \"\\n %@ = Array    \\n------------------------------\" ", key];
+            [str appendFormat:@"\n             str += \"\\n %@ = Array(\\( self.%@.count )) ------------------------------\" ", key, key];
             NSArray *array = (NSArray *)value;
             
             if ([array count] > 0)
@@ -603,14 +601,14 @@
                                   @"\n             }",
                  key];
             }
-            [str appendFormat:@"\n             str += \"\\n------------------------------\" "];
+            [str appendFormat:@"\n             str += \"\\n------------------------------------------------------------\" "];
         }
         else if ([value isKindOfClass:[NSDictionary class]])
         {
-            [str appendFormat:@"\n             str += \"\\n %@ = Object \\(self.%@!)\" ", subClassName, key];
+            [str appendFormat:@"\n             str += \"\\n %@ = Object \\(String(describing: self.%@))\" ", subClassName, key];
         }
     }
-    [str appendFormat:@"\n             str += \"\\n==== <\\(String(describing: type(of: self)) )> ====\" "];
+    [str appendFormat:@"\n             str += \"\\n--- ** \\(String(describing: type(of: self)) ) ** ------------------------------\" "];
     [str appendFormat:@"\n\n            return str"
                       @"\n        }"];
     

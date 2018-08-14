@@ -68,7 +68,7 @@
         className = @"unknow";
     }
     
-    return [NSString stringWithFormat:@"\n@property (nonatomic, %@) %@ %@; //",directive, className, keyName];
+    return [NSString stringWithFormat:@"\n@property (nonatomic, %@) %@ %@;",directive, className, keyName];
     
 }
 
@@ -81,25 +81,25 @@
     {
         className = @"String";
         defaultValue = @" = \"\"";
-        return [NSString stringWithFormat:@"\n    var %@ : %@%@ //", self.key, className, defaultValue];
+        return [NSString stringWithFormat:@"\n    var %@: %@%@", self.key, className, defaultValue];
     }
     else if ([self.value isKindOfClass:NSNumber.class])
     {
         className = [self getNumberClassNumberTypeSwift:(NSNumber*)self.value];
         defaultValue = [self getNumberDefaultValueNumberTypeSwift:(NSNumber*)self.value];
-        return [NSString stringWithFormat:@"\n    var %@ : %@%@ //", self.key, className, defaultValue];
+        return [NSString stringWithFormat:@"\n    var %@: %@%@", self.key, className, defaultValue];
     }
     else if ([self.value isKindOfClass:NSArray.class])
     {
         NSArray *obj = (NSArray*)self.value;
         NSObject *subObj = obj.firstObject;
         if ([subObj isKindOfClass:NSString.class]) {
-            return [NSString stringWithFormat:@"\n    var %@ = Array<String>() //", self.key];
+            return [NSString stringWithFormat:@"\n    var %@ = [String]()", self.key];
         }
         else {
-            className = [NSString stringWithFormat:@"Array<%@%@%@>",self.perfix, [self.key upercaseFirstChar], ARRAY_INNER_CLASS_TAIL_PIX];
+            className = [NSString stringWithFormat:@"[%@%@%@]",self.perfix, [self.key upercaseFirstChar], ARRAY_INNER_CLASS_TAIL_PIX];
             defaultValue =[NSString stringWithFormat:@"%@()", className];
-            return [NSString stringWithFormat:@"\n    var %@ = %@ //", self.key, defaultValue];
+            return [NSString stringWithFormat:@"\n    var %@ = %@", self.key, defaultValue];
         }
         
     }
@@ -107,12 +107,12 @@
     {
         className = [NSString stringWithFormat:@"%@%@", self.perfix, [self.key upercaseFirstChar]];
         defaultValue = [NSString stringWithFormat:@"%@?", className];
-        return [NSString stringWithFormat:@"\n    var %@: %@ //", self.key, defaultValue];
+        return [NSString stringWithFormat:@"\n    var %@: %@", self.key, defaultValue];
     }
     else if ([self.value isKindOfClass:NSNull.class])
     {
         className = @"unknow??";
-        return [NSString stringWithFormat:@"\n    var %@ : %@ //", self.key, className];
+        return [NSString stringWithFormat:@"\n    var %@: %@", self.key, className];
     }
     else {
         return @"";
