@@ -3,7 +3,7 @@
 # 🚀 JTC
 
 ## JSON TO CLASS
-> JSON to Class Helper written in Objective-C for iOS developers.
+> JSON to Class Helper written in Objective-C, Swift for iOS developers.
 
 <br>
 
