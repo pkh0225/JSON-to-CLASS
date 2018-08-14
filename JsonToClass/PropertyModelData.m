@@ -53,7 +53,7 @@
         NSArray *obj = (NSArray*)self.value;
         NSObject *subObj = obj.firstObject;
         if ([subObj isKindOfClass:NSString.class]) {
-            className = @"NSArry<NSString*>";
+            className = @"NSArray<NSString*>";
         }
         else {
             className = [NSString stringWithFormat:@"NSMutableArray<%@%@%@*>",self.perfix, [self.key upercaseFirstChar], ARRAY_INNER_CLASS_TAIL_PIX];
@@ -189,7 +189,13 @@
     
     if ([self.value isKindOfClass:NSArray.class])
     {
-        className = [NSString stringWithFormat:@"\n#import \"%@%@%@.h\"",self.perfix, [self.key upercaseFirstChar], ARRAY_INNER_CLASS_TAIL_PIX];
+        if (((NSArray*)self.value).count > 0) {
+            NSObject *item = ((NSArray*)self.value)[0];
+            if( [item isKindOfClass:NSDictionary.class]) {
+                className = [NSString stringWithFormat:@"\n#import \"%@%@%@.h\"",self.perfix, [self.key upercaseFirstChar], ARRAY_INNER_CLASS_TAIL_PIX];
+            }
+        }
+        
     }
     else if ([self.value isKindOfClass:[NSDictionary class]])
     {
