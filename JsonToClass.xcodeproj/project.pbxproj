@@ -377,7 +377,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JsonToClass/JsonToClass-Prefix.pch";
 				INFOPLIST_FILE = "JsonToClass/JsonToClass-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "solutos.co.kr.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = co.kr.JsonToClass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -391,7 +391,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JsonToClass/JsonToClass-Prefix.pch";
 				INFOPLIST_FILE = "JsonToClass/JsonToClass-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "solutos.co.kr.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = co.kr.JsonToClass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
