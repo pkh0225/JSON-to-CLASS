@@ -1,7 +1,5 @@
 ![blogimg](https://github.com/pkh0225/JSON-to-CLASS/blob/master/JsonToClass/jtc.png)
 
-### 🚧 작업중인 레포입니다. 
-
 # 🚀 JTC
 
 ## JSON TO CLASS
