@@ -1,8 +1,8 @@
 ![blogimg](https://github.com/pkh0225/JSON-to-CLASS/blob/master/JsonToClass/jtc.png)
 
-# 🚀 JTC
+# 🚀 JTC (Mac App)
 
-## JSON TO CLASS
+## JSON TO CLASS 
 > JSON to Class Helper written in Objective-C, Swift for iOS developers.
 
 <br>
