@@ -31,6 +31,13 @@
     _strPrefix = @"";
     tempParentClassName = @"NSObject";
 }
+
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag
+{
+    [self.window makeKeyAndOrderFront:self];
+    return NO;
+}
+
 - (IBAction)swiftButton:(NSButton *)sender {
     if (sender.state == NO) {
 
