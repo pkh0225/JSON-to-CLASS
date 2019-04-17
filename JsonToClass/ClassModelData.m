@@ -460,7 +460,7 @@
             break;
         case kCFNumberFloat32Type:
         case kCFNumberFloat64Type:
-            return [NSString stringWithFormat:@"if let data = dic[\"%@\"] as? float { self.%@ = data }", key, key];
+            return [NSString stringWithFormat:@"if let data = dic[\"%@\"] as? Float { self.%@ = data }", key, key];
             break;
             
         default:
