@@ -118,8 +118,7 @@ class PropertyModelData {
         var className: String? = nil
         
         if let obj = value as? [Any], obj.count > 0 {
-            let item = obj.first as? NSObject
-            if item is [String : Any] {
+            if obj.first is [String : Any] {
                 className = "\n#import \"\(perfix)\(key.capitalizedFirst())\(ARRAY_INNER_CLASS_TAIL_PIX).h\""
             }
         } else if (value is [String : Any]) {

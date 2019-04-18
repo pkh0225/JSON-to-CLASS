@@ -10,14 +10,13 @@ import Foundation
 
 let DATE_FORMAT = "yyyy. MM. dd.."
 
-class ClassModelData: NSObject {
+class ClassModelData {
     var name = ""
     var parentName = ""
     var perfix = ""
     var propertyList: [PropertyModelData] = []
     
     init(dic: [String : Any], className: String, parentName: String, perfix: String) {
-        super.init()
         self.perfix = perfix.capitalizedFirst()
         name = "\(self.perfix)\(className.capitalizedFirst())"
         self.parentName = parentName.capitalizedFirst()
@@ -27,7 +26,7 @@ class ClassModelData: NSObject {
     func setPropertyList(_ dic: [String : Any]) {
         propertyList.removeAll()
         for key in dic.keys {
-            let propertyModelData = PropertyModelData(key: key, object: dic[key] as? NSObject, perfix: perfix)
+            let propertyModelData = PropertyModelData(key: key, object: dic[key], perfix: perfix)
             propertyList.append(propertyModelData)
         }
     }
