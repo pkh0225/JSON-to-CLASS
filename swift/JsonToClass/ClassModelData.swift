@@ -349,7 +349,74 @@ class ClassModelData {
     }
     
     func makeDescriptionSwift() -> String {
-        return ""
+        
+        var result = """
+        
+        
+extension \(name) : CustomStringConvertible {
+    var description: String {
+        return getDescription()
+    }
+        
+    func getDescription(_ tapCount: UInt = 0, _ isArray: Bool = false) -> String {
+        var tap = ""
+        for _ in 0...tapCount { tap += "\\t" }
+        var str: String = (tapCount == 0) ? "\\n\\n" : "\\n"
+        if isArray {
+            str = \"--- *✏️ \\(String(describing: type(of: self))) ✏️* ---"
+        }
+        else {
+            str += \"\\(tap)==== **🖍 \\(String(describing: type(of: self))) 🖍** ===="
+        }
+        
+"""
+        
+        for propertyModelData in propertyList {
+            let key = propertyModelData.key
+            let value = propertyModelData.value
+            let subClassName = "\(perfix)\(key.capitalizedFirst())"
+//            var arraySubClassName = "\(perfix)\(key.capitalizedFirst())\(ARRAY_INNER_CLASS_TAIL_PIX)"
+            
+            if value is String || value is NSNumber || value is [String] {
+                result += "\n        str += \"\\n\\(tap) \(key) = \\(self.\(key))\" "
+            }
+            else if value is [Any] {
+                result += "\n        str += \"\\n\\(tap) \(key) = Array(\\( self.\(key).count )) ------------------------------\" "
+                let array = value as? [Any]
+                if (array?.count ?? 0) > 0 {
+                    result += """
+                    
+                             for (idx, item) in self.\(key).enumerated() {
+                                 str += "\\n\\t\\(tap)[\\(idx)] \\(item.getDescription(tapCount + 1, true))"
+                             }
+                    """
+                }
+                result += "\n        str += \"\\n\\(tap)------------------------------------------------------------\" "
+            }
+            else if value is [String : Any] {
+                result += """
+                
+                         if let item = self.\(key) {
+                            str += \"\\n\\(tap) \(subClassName) = SubObject ------------------------------\\(item.getDescription(tapCount + 1))\"
+                         }
+                         else {
+                             str += \"\\n\\(tap) \(subClassName) = nil"
+                         }
+                """
+            }
+
+            
+        }
+        
+        result += """
+        
+        str += \"\\n\\(tap)--- ** \\(String(describing: type(of: self)) ) ** ------------------------------"
+        return str
+    }
+}
+        
+"""
+        return result
     }
     
 }
