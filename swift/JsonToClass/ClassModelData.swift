@@ -352,24 +352,22 @@ class ClassModelData {
         
         var result = """
         
+        extension \(name) : CustomStringConvertible {
+            var description: String {
+                return getDescription()
+            }
         
-extension \(name) : CustomStringConvertible {
-    var description: String {
-        return getDescription()
-    }
-        
-    func getDescription(_ tapCount: UInt = 0, _ isArray: Bool = false) -> String {
-        var tap = ""
-        for _ in 0...tapCount { tap += "\\t" }
-        var str: String = (tapCount == 0) ? "\\n\\n" : "\\n"
-        if isArray {
-            str = \"--- *✏️ \\(String(describing: type(of: self))) ✏️* ---"
-        }
-        else {
-            str += \"\\(tap)==== **🖍 \\(String(describing: type(of: self))) 🖍** ===="
-        }
-        
-"""
+            func getDescription(_ tapCount: UInt = 0, _ isArray: Bool = false) -> String {
+                var tap = ""
+                for _ in 0...tapCount { tap += "\\t" }
+                var str: String = (tapCount == 0) ? "\\n\\n" : "\\n"
+                if isArray {
+                    str = \"--- *✏️ \\(String(describing: type(of: self))) ✏️* ---"
+                }
+                else {
+                    str += \"\\(tap)==== **🖍 \\(String(describing: type(of: self))) 🖍** ===="
+                }
+        """
         
         for propertyModelData in propertyList {
             let key = propertyModelData.key
@@ -404,18 +402,17 @@ extension \(name) : CustomStringConvertible {
                          }
                 """
             }
-
             
         }
         
         result += """
         
-        str += \"\\n\\(tap)--- ** \\(String(describing: type(of: self)) ) ** ------------------------------"
-        return str
-    }
-}
+                str += \"\\n\\(tap)--- ** \\(String(describing: type(of: self)) ) ** ------------------------------"
+                return str
+            }
+        }
         
-"""
+        """
         return result
     }
     
