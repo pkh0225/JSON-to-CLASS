@@ -216,7 +216,8 @@ class ViewController: NSViewController {
     
     func makeHClassFile(_ dic: [String : Any], className: String, parentClassName: String) {
         let classModelData = ClassModelData(dic: dic, className: className, parentName: parentClassName, perfix: strPrefix)
-        classModelDataList.append(classModelData)
+        classModelDataAdd(classModelData)
+//        classModelDataList.append(classModelData)
         
         for (key, value) in dic {
             if let array = value as? [Any], array.count > 0 {
@@ -236,7 +237,30 @@ class ViewController: NSViewController {
                 }
             }
         }
+    }
+    
+    func classModelDataAdd(_ addData: ClassModelData) {
         
+        let checkClassList = classModelDataList.filter { $0.name == addData.name }
+        if let checkClass = checkClassList.first {
+            var addProperty = [PropertyModelData]()
+            for addItem in addData.propertyList {
+                var check = false
+                for checkItem in checkClass.propertyList {
+                    if addItem.key == checkItem.key {
+                        check = true
+                        break
+                    }
+                }
+                if check == false {
+                    addProperty.append(addItem)
+                }
+            }
+            checkClass.propertyList.append(contentsOf: addProperty)
+        }
+        else {
+            classModelDataList.append(addData)
+        }
     }
     
     @discardableResult
