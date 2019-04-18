@@ -362,10 +362,10 @@ class ClassModelData {
                 for _ in 0...tapCount { tap += "\\t" }
                 var str: String = (tapCount == 0) ? "\\n\\n" : "\\n"
                 if isArray {
-                    str = \"--- *✏️ \\(String(describing: type(of: self))) ✏️* ---"
+                    str = \"--- ⬇️ \\(String(describing: type(of: self))) ⬇️ ---"
                 }
                 else {
-                    str += \"\\(tap)==== **🖍 \\(String(describing: type(of: self))) 🖍** ===="
+                    str += \"\\(tap)==== *🎃* \\(String(describing: type(of: self))) *🎃* ===="
                 }
         """
         
@@ -380,8 +380,7 @@ class ClassModelData {
             }
             else if value is [Any] {
                 result += "\n        str += \"\\n\\(tap) \(key) = Array(\\( self.\(key).count )) ------------------------------\" "
-                let array = value as? [Any]
-                if (array?.count ?? 0) > 0 {
+                if let array = value as? [Any], array.count > 0 {
                     result += """
                     
                              for (idx, item) in self.\(key).enumerated() {
