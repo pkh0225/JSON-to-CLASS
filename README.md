@@ -19,64 +19,46 @@
 
 
 ```
-- (NSString *)makeImplementationParser
-{
-    
-    NSMutableString *str = [[NSMutableString alloc] init];
-    
-    for (PropertyModelData *propertyModelData in self.propertyList)
-    {
-        NSString *key = propertyModelData.key;
-        NSObject *value = propertyModelData.value;
-        NSString *subClassName = [NSString stringWithFormat:@"%@%@",self.perfix, [key upercaseFirstChar]];
-        NSString *arraySubClassName = [NSString stringWithFormat:@"%@%@%@",self.perfix, [key upercaseFirstChar], ARRAY_INNER_CLASS_TAIL_PIX];
-        //        NSLog(@"key = %@, value = %@, value class = %@", key, value, [value className]);
-        
-        if ([value isKindOfClass:[NSString class]])
-        {
-            [str appendFormat:@"\n    self.%@ = [dic objectForKey:@\"%@\"];", key, key];
-        }
-        else if ([value isKindOfClass:[NSNumber class]])
-        {
-            [str appendFormat:@"\n    %@", [self makeMClassParserNumberType:CFNumberGetType((CFNumberRef)value) key:key]];
-        }
-        else if ([value isKindOfClass:[NSArray class]])
-        {
-            NSArray *array = (NSArray *)value;
+func makeSetSerializeParserSwift() -> String {
+        var str = ""
+        for propertyModelData in propertyList {
+            guard let value = propertyModelData.value else { continue }
+            let key = propertyModelData.key
+            let subClassName = "\(perfix)\(key.capitalizedFirst())"
+            let arraySubClassName = "\(perfix)\(key.capitalizedFirst())\(ARRAY_INNER_CLASS_TAIL_PIX)"
             
-            if ([array count] > 0)
-            {
-                NSObject *obj = [array objectAtIndex:0];
-                if ([obj isKindOfClass:[NSDictionary class]])
-                {
-                    [str appendFormat:@"\n    if ([[dic objectForKey:@\"%@\"] isKindOfClass:[NSArray class]]) {", key];
-                    [str appendFormat:@"\n        self.%@ = [[NSMutableArray<%@*> alloc] init];", key, arraySubClassName];
-                    [str appendFormat:@"\n        for (NSDictionary *arrayItem  in [dic objectForKey:@\"%@\"])"
-                                      @"\n        {"
-                                      @"\n            %@ *obj =  [%@ allocWithDictionary:arrayItem];"
-                                      @"\n            if (obj != nil)"
-                                      @"\n                [self.%@ addObject:obj];"
-                                      @"\n        }",
-                     key, arraySubClassName, arraySubClassName, key];
-                    [str appendFormat:@"\n    }"];
+            if numberType(value) is Int {
+                str += "\n        if let data = dic[\"\(key)\"] as? Int { self.\(key) = data }"
+            }
+            else if numberType(value) is CGFloat {
+                str += "\n        if let data = dic[\"\(key)\"] as? CGFloat { self.\(key) = data }"
+            }
+            else if numberType(value) is Bool {
+                str += "\n        if let data = dic[\"\(key)\"] as? Bool { self.\(key) = data }"
+            }
+            else if value is String {
+                str += "\n        if let data = dic[\"\(key)\"] as? String { self.\(key) = data }"
+            }
+            else if let array = value as? [Any], array.count > 0 {
+                if array.first is [String : Any] {
+                    str += """
+                    
+                            if let data = dic[\"\(key)\"] as? [[String: Any]] { self.\(key) = data.compactMap{ \(arraySubClassName)($0) } }
+                    """
                 }
-                else
-                {
-                    [str appendFormat:@"\n    self.%@ = [dic objectForKey:@\"%@\"];", key, key];
+                else if array.first is String {
+                    str += "\n        if let data = dic[\"\(key)\"] as? [String] { self.\(key) = data }"
                 }
-                
+                else {
+                    str += "\n        if let data = dic[\"\(key)\"] as? [Any] { self.\(key) = data }"
+                }
+            }
+            else if value is [String : Any] {
+                str += "\n        if let data = dic[\"\(key)\"] as? [String: Any] { self.\(key) = \(subClassName)(data) }"
+            } else {
+                str += "\n        self.\(key) =  \(String(describing: value)); //type error \(String(describing: value))"
             }
         }
-        else if ([value isKindOfClass:[NSDictionary class]])
-        {
-            [str appendFormat:@"\n    self.%@ = [%@ allocWithDictionary:[dic objectForKey:@\"%@\"]];", key, subClassName, key];
-        }
-        else
-        {
-            [str appendFormat:@"\n    self.%@ =  %@; //type error %@", key, NSStringFromClass([value class]), NSStringFromClass([value class])];
-        }
+        return str
     }
-    
-    return str;
-}
 ```
