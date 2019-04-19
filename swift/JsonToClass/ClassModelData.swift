@@ -357,15 +357,18 @@ class ClassModelData {
                 return getDescription()
             }
         
-            func getDescription(_ tapCount: UInt = 0, _ isArray: Bool = false) -> String {
+            func getDescription(_ tapCount: UInt = 0, _ addType: Int = 0) -> String {
                 var tap = ""
                 for _ in 0...tapCount { tap += "\\t" }
-                var str: String = (tapCount == 0) ? "\\n\\n" : "\\n"
-                if isArray {
-                    str = \"--- ⬇️ \\(String(describing: type(of: self))) ⬇️ ---"
+                var result: [String] = []
+                if addType == 1 {
+                    result.append(\"--- ⬇️ \\(String(describing: type(of: self))) ⬇️ ------")
+                }
+                else if addType == 2 {
+                    result.append(\"➡️ ---  \\(String(describing: type(of: self))) ------")
                 }
                 else {
-                    str += \"\\(tap)==== *🎃* \\(String(describing: type(of: self))) *🎃* ===="
+                    result.append(\"\\n\\(tap)✏️ ================  \\(String(describing: type(of: self))) ================ ✏️")
                 }
         """
         
@@ -376,28 +379,28 @@ class ClassModelData {
 //            var arraySubClassName = "\(perfix)\(key.capitalizedFirst())\(ARRAY_INNER_CLASS_TAIL_PIX)"
             
             if value is String || value is NSNumber || value is [String] {
-                result += "\n        str += \"\\n\\(tap) \(key) = \\(self.\(key))\" "
+                result += "\n        result.append(\"\(key) = \\(self.\(key))\") "
             }
             else if value is [Any] {
-                result += "\n        str += \"\\n\\(tap) \(key) = Array(\\( self.\(key).count )) ------------------------------\" "
+                result += "\n        result.append(\"\(key) = Array(\\( self.\(key).count )) ------------------------------\") "
                 if let array = value as? [Any], array.count > 0 {
                     result += """
                     
                              for (idx, item) in self.\(key).enumerated() {
-                                 str += "\\n\\t\\(tap)[\\(idx)] \\(item.getDescription(tapCount + 1, true))"
+                                 result.append("[\\(idx)] \\(item.getDescription(tapCount + 1, 1))")
                              }
                     """
                 }
-                result += "\n        str += \"\\n\\(tap)------------------------------------------------------------\" "
+                result += "\n        result.append(\"------------------------------------------------------------\") "
             }
             else if value is [String : Any] {
                 result += """
                 
                          if let item = self.\(key) {
-                            str += \"\\n\\(tap) \(subClassName) = SubObject ------------------------------\\(item.getDescription(tapCount + 1))\"
+                            result.append(\"\(subClassName) = \\(item.getDescription(tapCount + 1, 2))\")
                          }
                          else {
-                             str += \"\\n\\(tap) \(subClassName) = nil"
+                             result.append(\"\(subClassName) = nil")
                          }
                 """
             }
@@ -406,8 +409,16 @@ class ClassModelData {
         
         result += """
         
-                str += \"\\n\\(tap)--- ** \\(String(describing: type(of: self)) ) ** ------------------------------"
-                return str
+                if addType == 1  {
+        
+                }
+                else if addType == 2 {
+                    result.append(\"----------- \\(String(describing: type(of: self)) ) ----------------------")
+                }
+                else {
+                    result.append(\"✏️ ================  \\(String(describing: type(of: self)))  ================ ✏️")
+                }
+                return result.joined(separator: "\\n\\(tap)")
             }
         }
         
