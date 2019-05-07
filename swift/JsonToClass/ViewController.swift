@@ -111,7 +111,7 @@ class ViewController: NSViewController {
                 return
             }
             
-            if parser.state == NSControl.StateValue.on {
+            if parserButton.state == NSControl.StateValue.on {
                 var stringData = ""
                 for data in classModelDataList {
                     if stringData == "" {
