@@ -734,7 +734,7 @@
                             <textField verticalHuggingPriority="750" id="QwW-Dm-73m">
                                 <rect key="frame" x="432" y="676" width="188" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="hkY-PE-9aK">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="ParserObject" drawsBackground="YES" id="hkY-PE-9aK">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -956,7 +956,7 @@
                             <button id="9Pj-Hl-iXC">
                                 <rect key="frame" x="641" y="678" width="58" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Perfix" bezelStyle="regularSquare" imagePosition="left" inset="2" id="sQY-bs-N4b">
+                                <buttonCell key="cell" type="check" title="Perfix" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="sQY-bs-N4b">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -964,7 +964,7 @@
                             <textField verticalHuggingPriority="750" id="YnJ-0u-pa3">
                                 <rect key="frame" x="705" y="676" width="126" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="R1O-eY-Qvm">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="DI_" drawsBackground="YES" id="R1O-eY-Qvm">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -992,6 +992,17 @@
                                     <action selector="onPath:" target="XfG-lQ-9wD" id="U8a-wH-ILD"/>
                                 </connections>
                             </button>
+                            <button id="Vtr-4H-Lvq">
+                                <rect key="frame" x="837" y="679" width="61" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="ssg" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="tRB-Lq-aqo">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="ssgButton:" target="XfG-lQ-9wD" id="FIZ-6J-Hye"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
@@ -1000,6 +1011,7 @@
                         <outlet property="prefixCheckButton" destination="9Pj-Hl-iXC" id="v18-bO-x8g"/>
                         <outlet property="prefixTextField" destination="YnJ-0u-pa3" id="wQa-ed-Fts"/>
                         <outlet property="rootClassNameTextField" destination="8k8-wP-d2S" id="FfE-w6-kYg"/>
+                        <outlet property="ssgButton" destination="Vtr-4H-Lvq" id="Hq3-uD-7td"/>
                         <outlet property="swifCheckButton" destination="fJx-NL-gEd" id="6jx-Oh-uEE"/>
                         <outlet property="textView" destination="M6v-QM-2bF" id="VAf-uj-KGt"/>
                         <outlet property="textViewPreview" destination="lDD-ES-YcO" id="QEb-ck-BZ3"/>

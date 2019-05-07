@@ -18,7 +18,8 @@ class ViewController: NSViewController {
     @IBOutlet weak var prefixTextField: NSTextField!
     @IBOutlet weak var prefixCheckButton: NSButton!
     @IBOutlet weak var swifCheckButton: NSButton!
-
+    @IBOutlet weak var ssgButton: NSButton!
+    
     
     
     var stringData = ""
@@ -47,7 +48,6 @@ class ViewController: NSViewController {
     }
 
     @IBAction func onMakeFile(_ sender: NSButton) {
-        print("onMakeFile")
         
         strPrefix = ""
         classModelDataList.removeAll()
@@ -110,14 +110,29 @@ class ViewController: NSViewController {
                 alert.beginSheetModal(for: NSApplication.shared.mainWindow!, completionHandler: nil)
                 return
             }
-            for data in classModelDataList {
-                if swiftCheck == false {
-                    createFile(data.getStringObjectCHeader(), fileName: "\(data.name).h")
-                    createFile(data.getStringObjectCImplementation(), fileName: "\(data.name).m")
-                } else {
-                    createFile(data.getStringSwift(), fileName: "\(data.name).swift")
+            
+            if ssgButton.state == NSControl.StateValue.on {
+                var stringData = ""
+                for data in classModelDataList {
+                    if stringData == "" {
+                        stringData = "\(data.makeClassAnnotate())\(data.getImportHeaderFilesSwift())"
+                    }
+                    stringData = "\(stringData)\(data.getStringSwiftSSG())"
+                }
+                
+                createFile(stringData, fileName: "\(rootClassNameTextField.stringValue).swift")
+            }
+            else {
+                for data in classModelDataList {
+                    if swiftCheck == false {
+                        createFile(data.getStringObjectCHeader(), fileName: "\(data.name).h")
+                        createFile(data.getStringObjectCImplementation(), fileName: "\(data.name).m")
+                    } else {
+                        createFile(data.getStringSwift(), fileName: "\(data.name).swift")
+                    }
                 }
             }
+            
             
             NSWorkspace.shared.selectFile(nil, inFileViewerRootedAtPath: folderFilePath)
             
@@ -203,8 +218,22 @@ class ViewController: NSViewController {
         
     }
     
+    @IBAction func ssgButton(_ sender: NSButton) {
+        if sender.state == NSControl.StateValue.on {
+            parentClassNameTextField.stringValue = "ParserObject"
+            prefixTextField.stringValue = "DI_"
+            prefixCheckButton.state = NSControl.StateValue.on
+            swifCheckButton.state = NSControl.StateValue.on
+        }
+        else {
+            parentClassNameTextField.stringValue = ""
+            prefixTextField.stringValue = ""
+            prefixCheckButton.state = NSControl.StateValue.off
+        }
+    }
+    
     @IBAction func swiftButton(_ sender: NSButton) {
-        print("swiftButton")
+        
         if sender.state == NSControl.StateValue.off {
             parentClassNameTextField.stringValue = tempParentClassName
         } else {

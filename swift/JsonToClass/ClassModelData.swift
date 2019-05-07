@@ -87,6 +87,22 @@ class ClassModelData {
 
     }
     
+    func getStringSwiftSSG() -> String {
+        var result = ""
+        var propertyResult = ""
+        
+        for propertyModelData in propertyList {
+            propertyResult += propertyModelData.getStringSwif()
+        }
+        
+        result += getClassStartSwift()
+        result += propertyResult
+        result += getClassEndSwift()
+        
+        return result
+        
+    }
+    
     func makeClassAnnotate() -> String {
         let format = DateFormatter()
         format.dateFormat = DATE_FORMAT
