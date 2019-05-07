@@ -117,7 +117,7 @@ class ViewController: NSViewController {
                     if stringData == "" {
                         stringData = "\(data.makeClassAnnotate())\(data.getImportHeaderFilesSwift())"
                     }
-                    stringData = "\(stringData)\(data.getStringSwiftSSG())"
+                    stringData = "\(stringData)\(data.getStringSwiftSSG())\n"
                 }
                 
                 createFile(stringData, fileName: "\(rootClassNameTextField.stringValue).swift")
@@ -144,7 +144,7 @@ class ViewController: NSViewController {
                     if stringData == "" {
                         stringData = "\(data.makeClassAnnotate())\(data.getImportHeaderFilesSwift())"
                     }
-                    stringData = "\(stringData)\(data.getStringSwiftSSG())"
+                    stringData = "\(stringData)\(data.getStringSwiftSSG())\n"
                 }
                 textViewPreview.string = stringData
             }
