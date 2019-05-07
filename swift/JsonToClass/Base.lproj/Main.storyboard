@@ -678,7 +678,7 @@
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="0.0"/>
+            <point key="canvasLocation" x="63" y="-12"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -776,17 +776,6 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button verticalHuggingPriority="750" id="Xji-XV-00f">
-                                <rect key="frame" x="885" y="678" width="21" height="23"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="tree" imagePosition="left" alignment="center" borderStyle="border" inset="2" id="ABJ-FX-r8C">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="onTree:" target="XfG-lQ-9wD" id="zfb-tl-n29"/>
-                                </connections>
-                            </button>
                             <splitView dividerStyle="paneSplitter" vertical="YES" id="DNi-I8-ttU">
                                 <rect key="frame" x="12" y="15" width="981" height="620"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -981,6 +970,17 @@
                                     <action selector="swiftButton:" target="XfG-lQ-9wD" id="aue-Zd-6iu"/>
                                 </connections>
                             </button>
+                            <button id="Vtr-4H-Lvq">
+                                <rect key="frame" x="837" y="679" width="61" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Parser" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="tRB-Lq-aqo">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="ssgParser:" target="XfG-lQ-9wD" id="PEN-cA-iIW"/>
+                                </connections>
+                            </button>
                             <button horizontalHuggingPriority="750" verticalHuggingPriority="750" id="k30-69-IPP">
                                 <rect key="frame" x="787" y="646" width="29" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
@@ -992,26 +992,26 @@
                                     <action selector="onPath:" target="XfG-lQ-9wD" id="U8a-wH-ILD"/>
                                 </connections>
                             </button>
-                            <button id="Vtr-4H-Lvq">
-                                <rect key="frame" x="837" y="679" width="61" height="18"/>
+                            <button verticalHuggingPriority="750" id="Xji-XV-00f">
+                                <rect key="frame" x="904" y="676" width="21" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="ssg" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="tRB-Lq-aqo">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="tree" imagePosition="left" alignment="center" borderStyle="border" inset="2" id="ABJ-FX-r8C">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="ssgButton:" target="XfG-lQ-9wD" id="FIZ-6J-Hye"/>
+                                    <action selector="onTree:" target="XfG-lQ-9wD" id="zfb-tl-n29"/>
                                 </connections>
                             </button>
                         </subviews>
                     </view>
                     <connections>
                         <outlet property="parentClassNameTextField" destination="QwW-Dm-73m" id="W7Q-s0-mly"/>
+                        <outlet property="parserButton" destination="Vtr-4H-Lvq" id="Brq-Pa-nqz"/>
                         <outlet property="pathTextField" destination="N5n-9k-wT6" id="s11-2D-mpZ"/>
                         <outlet property="prefixCheckButton" destination="9Pj-Hl-iXC" id="v18-bO-x8g"/>
                         <outlet property="prefixTextField" destination="YnJ-0u-pa3" id="wQa-ed-Fts"/>
                         <outlet property="rootClassNameTextField" destination="8k8-wP-d2S" id="FfE-w6-kYg"/>
-                        <outlet property="ssgButton" destination="Vtr-4H-Lvq" id="Hq3-uD-7td"/>
                         <outlet property="swifCheckButton" destination="fJx-NL-gEd" id="6jx-Oh-uEE"/>
                         <outlet property="textView" destination="M6v-QM-2bF" id="VAf-uj-KGt"/>
                         <outlet property="textViewPreview" destination="lDD-ES-YcO" id="QEb-ck-BZ3"/>
@@ -1019,7 +1019,7 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1642" y="886"/>
+            <point key="canvasLocation" x="75" y="946"/>
         </scene>
     </scenes>
     <resources>

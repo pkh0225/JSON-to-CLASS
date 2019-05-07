@@ -18,7 +18,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var prefixTextField: NSTextField!
     @IBOutlet weak var prefixCheckButton: NSButton!
     @IBOutlet weak var swifCheckButton: NSButton!
-    @IBOutlet weak var ssgButton: NSButton!
+    @IBOutlet weak var parserButton: NSButton!
     
     
     
@@ -111,7 +111,7 @@ class ViewController: NSViewController {
                 return
             }
             
-            if ssgButton.state == NSControl.StateValue.on {
+            if parser.state == NSControl.StateValue.on {
                 var stringData = ""
                 for data in classModelDataList {
                     if stringData == "" {
@@ -218,7 +218,7 @@ class ViewController: NSViewController {
         
     }
     
-    @IBAction func ssgButton(_ sender: NSButton) {
+    @IBAction func ssgParser(_ sender: NSButton) {
         if sender.state == NSControl.StateValue.on {
             parentClassNameTextField.stringValue = "ParserObject"
             prefixTextField.stringValue = "DI_"
