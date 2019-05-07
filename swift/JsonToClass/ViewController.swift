@@ -138,14 +138,26 @@ class ViewController: NSViewController {
             
         }
         else {
-            textViewPreview.string = ""
-            if swiftCheck == false {
+            if parserButton.state == NSControl.StateValue.on {
+                var stringData = ""
                 for data in classModelDataList {
-                    textViewPreview.string = "\(textViewPreview.string)\n\n\(data.getStringObjectCHeader())\n\n\(data.getStringObjectCImplementation())"
+                    if stringData == "" {
+                        stringData = "\(data.makeClassAnnotate())\(data.getImportHeaderFilesSwift())"
+                    }
+                    stringData = "\(stringData)\(data.getStringSwiftSSG())"
                 }
-            } else {
-                for data in classModelDataList {
-                    textViewPreview.string = "\(textViewPreview.string)\n\n\(data.getStringSwift())"
+                textViewPreview.string = stringData
+            }
+            else {
+                textViewPreview.string = ""
+                if swiftCheck == false {
+                    for data in classModelDataList {
+                        textViewPreview.string = "\(textViewPreview.string)\n\n\(data.getStringObjectCHeader())\n\n\(data.getStringObjectCImplementation())"
+                    }
+                } else {
+                    for data in classModelDataList {
+                        textViewPreview.string = "\(textViewPreview.string)\n\n\(data.getStringSwift())"
+                    }
                 }
             }
             
