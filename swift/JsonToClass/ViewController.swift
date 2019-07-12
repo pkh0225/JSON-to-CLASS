@@ -120,7 +120,7 @@ class ViewController: NSViewController {
                     stringData = "\(stringData)\(data.getStringSwiftSSG())\n"
                 }
                 
-                createFile(stringData, fileName: "\(rootClassNameTextField.stringValue).swift")
+                createFile(stringData, fileName: "\(prefixTextField.stringValue)\(rootClassNameTextField.stringValue).swift")
             }
             else {
                 for data in classModelDataList {
