@@ -230,6 +230,17 @@ class ClassModelData {
         return """
         
         
+        
+            class func initAsync(_ dic : [String: Any]?, completion: @escaping (\(name)?) -> Void) {
+                guard let dic = dic else { completion(nil); return }
+                DispatchQueue.global().async {
+                    let obj = \(name)(dic)
+                    DispatchQueue.main.async {
+                        completion(obj)
+                    }
+                }
+            }
+        
             init(_ dic: [String: Any]?) {
                 guard let dic = dic else { return }
                 self.setSerialize(dic)
@@ -443,3 +454,4 @@ class ClassModelData {
     }
     
 }
+
