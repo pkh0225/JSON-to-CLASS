@@ -1,4 +1,3 @@
-![blogimg](https://github.com/pkh0225/JSON-to-CLASS/blob/master/JsonToClass/jtc.png)
 
 # 🚀 JTC (Mac App)
 
