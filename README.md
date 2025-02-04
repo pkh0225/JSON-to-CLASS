@@ -6,6 +6,7 @@
 
 ![blogimg](https://github.com/pkh0225/JSON-to-CLASS/blob/master/app.png)
 ![blogimg](https://github.com/pkh0225/JSON-to-CLASS/blob/master/file.png)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 <br>
 
